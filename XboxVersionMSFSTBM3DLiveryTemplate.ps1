@@ -1,10 +1,10 @@
 function New-Livery {
     if (-not (Test-Path $livloc)) {
         Write-Host "Making Folders"
-        # New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\MODEL.$airfold" -ItemType Directory
-        # New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\MODEL.AI_$airfold" -ItemType Directory
+        New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\MODEL.$airfold" -ItemType Directory
+        New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\MODEL.AI_$airfold" -ItemType Directory
         New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\TEXTURE.$airfold" -ItemType Directory
-        # New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\PANEL.$airfold" -ItemType Directory
+        New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\PANEL.$airfold" -ItemType Directory
     }
 }
 function Move-Files {
@@ -13,13 +13,13 @@ function Move-Files {
     foreach ($item in $moveddsfile) {
         Copy-Item "$PSScriptRoot\texture\json\$item.json" -destination "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\TEXTURE.$airfold"
     }
-    # Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\PANEL.$airfold\PANEL.CFG"
-    # Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\PANEL.$airfold\PANEL.XML"
+    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\PANEL.$airfold\PANEL.CFG"
+    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\PANEL.$airfold\PANEL.XML"
     Copy-Item "$PSScriptRoot\Files\manifest.json" "$livloc\manifest.json"
     Copy-Item "$PSScriptRoot\Files\layout.json" "$livloc\layout.json"
     Copy-Item "$PSScriptRoot\Files\aircraft.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
-    # Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\MODEL.$airfold\model.cfg"
-    # Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\MODEL.AI_$airfold\model.cfg"
+    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\MODEL.$airfold\model.cfg"
+    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\MODEL.AI_$airfold\model.cfg"
     Copy-Item "$PSScriptRoot\Files\texture.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\TEXTURE.$airfold\texture.cfg"
     Get-ChildItem -path "$PSScriptRoot\texture" -filter *.dds | Copy-Item -destination "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\TEXTURE.$airfold"
 }
@@ -93,7 +93,7 @@ function Install-NeededPrograms {
 function Open-Blender {
     Write-Host "Opening Blender"
     $blenderloc = Get-ChildItem -Path "C:\Program Files\Blender Foundation\" -Include blender.exe -File -Recurse -ErrorAction SilentlyContinue
-    Start-Process -FilePath $blenderloc.FullName -ArgumentList $PSScriptRoot\747.blend
+    Start-Process -FilePath $blenderloc.FullName -ArgumentList $PSScriptRoot\tbm.blend
     Write-Host "Waiting until you are complete with editing the files"
     Pause
 }
