@@ -4,7 +4,6 @@ function New-Livery {
         New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\MODEL.$airfold" -ItemType Directory
         New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\MODEL.AI_$airfold" -ItemType Directory
         New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\TEXTURE.$airfold" -ItemType Directory
-        New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\PANEL.$airfold" -ItemType Directory
     }
 }
 function Move-Files {
@@ -13,8 +12,6 @@ function Move-Files {
     foreach ($item in $moveddsfile) {
         Copy-Item "$PSScriptRoot\texture\json\$item.json" -destination "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\TEXTURE.$airfold"
     }
-    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\PANEL.$airfold\PANEL.CFG"
-    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\PANEL.$airfold\PANEL.XML"
     Copy-Item "$PSScriptRoot\Files\manifest.json" "$livloc\manifest.json"
     Copy-Item "$PSScriptRoot\Files\layout.json" "$livloc\layout.json"
     Copy-Item "$PSScriptRoot\Files\aircraft.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
