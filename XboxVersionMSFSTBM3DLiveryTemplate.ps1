@@ -1,27 +1,29 @@
 function New-Livery {
     if (-not (Test-Path $livloc)) {
         Write-Host "Making Folders"
-        New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\MODEL.$airfold" -ItemType Directory
-        New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\MODEL.AI_$airfold" -ItemType Directory
-        New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\TEXTURE.$airfold" -ItemType Directory
-        New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\PANEL.$airfold" -ItemType Directory
+        New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\MODEL.$airfold" -ItemType Directory
+        New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\MODEL.AI_$airfold" -ItemType Directory
+        New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\TEXTURE.$airfold" -ItemType Directory
+        New-Item -Path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\PANEL.$airfold" -ItemType Directory
     }
 }
 function Move-Files {
     Write-Host "Moving Files"
     $moveddsfile = Get-ChildItem -Path $PSScriptRoot\texture -Filter *.dds
     foreach ($item in $moveddsfile) {
-        Copy-Item "$PSScriptRoot\texture\json\$item.json" -destination "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\TEXTURE.$airfold"
+        Copy-Item "$PSScriptRoot\texture\json\$item.json" -destination "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\TEXTURE.$airfold"
     }
-    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\PANEL.$airfold\PANEL.CFG"
-    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\PANEL.$airfold\PANEL.XML"
+    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\PANEL.$airfold\PANEL.CFG"
+    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\PANEL.$airfold\PANEL.XML"
     Copy-Item "$PSScriptRoot\Files\manifest.json" "$livloc\manifest.json"
     Copy-Item "$PSScriptRoot\Files\layout.json" "$livloc\layout.json"
-    Copy-Item "$PSScriptRoot\Files\aircraft.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
-    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\MODEL.$airfold\model.cfg"
-    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\MODEL.AI_$airfold\model.cfg"
-    Copy-Item "$PSScriptRoot\Files\texture.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\TEXTURE.$airfold\texture.cfg"
-    Get-ChildItem -path "$PSScriptRoot\texture" -filter *.dds | Copy-Item -destination "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\TEXTURE.$airfold"
+    Copy-Item "$PSScriptRoot\Files\aircraft.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
+    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\MODEL.$airfold\model.cfg"
+    Copy-Item "$PSScriptRoot\Files\model.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\MODEL.AI_$airfold\model.cfg"
+    Copy-Item "$PSScriptRoot\Files\texture.cfg" "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\TEXTURE.$airfold\texture.cfg"
+    Get-ChildItem -path "$PSScriptRoot\texture" -filter *.dds | Copy-Item -destination "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\TEXTURE.$airfold"
+    Copy-Item "$PSScriptRoot\texture\thumbnail_small.JPG" "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\TEXTURE.$airfold\thumbnail_small.JPG"
+    Copy-Item "$PSScriptRoot\texture\thumbnail.JPG" "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\TEXTURE.$airfold\thumbnail.JPG"
 }
 
 function Update-ManifestJson {
@@ -37,27 +39,27 @@ function Update-ManifestJson {
 function Update-AircraftConfig {
     # Im sure there is a better way, but this worked.
     Write-Host "Updating Aircraft.cfg"
-    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
+    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
     $newfile = $file -replace 'AIRFOLD" ', ("$airfold" + '" ')
-    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
-    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
+    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
+    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
     $newfile = $file -replace 'AIRLINE" ', ("$airline" + '" ')
-    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
-    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
+    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
+    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
     $newfile = $file -replace 'PERSONA" ', ("$name" + '" ')
-    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
-    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
+    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
+    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
     $newfile = $file -replace 'ATCID" ', ("$atcid" + '" ')
-    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
-    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
+    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
+    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
     $newfile = $file -replace 'ICAO" ', ("$icao" + '" ')
-    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
-    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
+    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
+    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
     $newfile = $file -replace '##" ', ("$flightnumber" + '" ')
-    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
-    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
+    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
+    $file = Get-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
     $newfile = $file -replace 'AIRFOLD Livery" ', ("$airfold" + ' Livery')
-    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930_Livery$airfold\aircraft.cfg"
+    $newfile | Set-content -path "$livloc\SimObjects\Airplanes\Asobo_TBM930-$airfold\aircraft.cfg"
 }
 
 function Convert-ToDDS {
